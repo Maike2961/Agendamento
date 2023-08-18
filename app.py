@@ -71,6 +71,7 @@ def remover(id):
     remcasd = cadastrar.query.filter_by(id=id).first()
     db.session.delete(remcasd)
     db.session.commit()
+    flash(f"O usuario {remcasd.nome} foi deletado")
     return redirect(url_for("consulta"))
 
 @app.route("/editar_cadastro/<int:id>", methods=["GET", "POST"])
@@ -88,6 +89,7 @@ def edita(id):
         setattr(salvar, "endereco", endereco)
         setattr(salvar, "cpf", cpf)
         db.session.commit()
+        flash(f"O usuario {salvar.nome} foi alterado com sucesso")
         return redirect(url_for("consulta"))
     return render_template("editar.html", editar=editar)
 
