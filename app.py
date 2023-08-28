@@ -15,7 +15,7 @@ class cadastrar(db.Model):
     endereco = db.Column(db.String(100))
     cpf = db.Column(db.String(12))
 
-#ROTA INICIAL
+#ROTA INICIA
 @app.route("/", methods=["GET", "POST"])
 def index():
     return render_template("index.html")
