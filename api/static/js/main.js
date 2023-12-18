@@ -12,9 +12,50 @@ $(document).ready(function () {
                     { "data": "idade" },
                     { "data": "endereco" },
                     { "data": "cpf" },
-                    { "data": "id", render: function (data) { return '<a href="/remover_cadastro/' + data + ' "><img class="icon" src="static/img/delete.png"/></a>' } },
+                    { "data": "id", render: function (data) { return '<a href="javascript:sweet(' + data + ')"><img class="icon" src="static/img/delete.png"/></a>' } },
                     { "data": "id", render: function (data) { return '<a href="/editar_cadastro/' + data + ' "><img class="icon" src="static/img/edit.png"/></a>' } }
                 ]
             });
         })
 })
+
+
+function sweet(id) {
+    console.log(id)
+    Swal.fire({
+        title: "Deseja Excluir a tarefa",
+        showCancelButton: true,
+        icon: 'question',
+        confirmButtonColor: '#66e04d',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Excluir'
+
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success"
+            })
+            //location.reload()
+            let env = {}
+            env.id = id
+            $.ajax({
+                url: "/excluir_cadastro",
+                contentType: "application/json; charset=UTF-8",
+                data: JSON.stringify(env),
+                dataType: "json",
+                type: "POST",
+                success: function (response) {
+                    console.log(response)
+                    response.reload()
+                    $(`#row-${id}`).remove();
+                },
+                error: function (erro) {
+                    console.log(erro)
+                }
+            })
+        }
+    })
+} 

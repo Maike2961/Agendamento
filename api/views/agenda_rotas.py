@@ -55,6 +55,13 @@ def lista_cadastro():
         cadastrolist.append(cadastroObj)
     return jsonify({"cadastro" : cadastrolist})
 
+@app.route("/excluir_cadastro", methods=["GET", "POST"])
+def redi():
+    dado = request.get_json()
+    id = dado.get('id')
+    print(id)
+    return redirect(url_for("remover", id=id))
+
 @app.route("/remover_cadastro/<int:id>")
 def remover(id):
     remcasd = agenda_model.cadastrar.query.filter_by(id=id).first()
