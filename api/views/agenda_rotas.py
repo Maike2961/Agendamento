@@ -1,19 +1,8 @@
-from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
-from flask_sqlalchemy import SQLAlchemy
+from app import app
+from app import db
+from models import agenda_model
+from flask import render_template,redirect,request,flash,jsonify, url_for
 from sqlalchemy.sql import and_
-
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///banco.db"
-app.config["SECRET_KEY"] = "dont tells please"
-db = SQLAlchemy(app)
-
-class cadastrar(db.Model):
-    __tablename__ = "Cadastro"
-    id = db.Column(db.Integer, primary_key = True)
-    nome = db.Column(db.String(50))
-    idade = db.Column(db.Integer)
-    endereco = db.Column(db.String(100))
-    cpf = db.Column(db.String(12))
 
 #ROTA INICIA
 @app.route("/", methods=["GET", "POST"])
@@ -29,14 +18,14 @@ def cadastro():
         idade = request.form["idade"]
         cpf = request.form["cpf"]
         endereco = request.form["endereco"]
-        busca1 = cadastrar.query.filter(and_(cadastrar.nome == nome), (cadastrar.cpf == cpf)).first()
+        busca1 = agenda_model.cadastrar.query.filter(and_(agenda_model.cadastrar.nome == nome), (agenda_model.cadastrar.cpf == cpf)).first()
         if not nome or not idade or not cpf or not endereco:
             flash("Preencha corretamente")
         elif busca1:
             flash("Cliente já cadastrado")
         else:
             flash("Salvo")
-            salvar = cadastrar()
+            salvar = agenda_model.cadastrar()
             salvar.nome = nome
             salvar.idade = idade
             salvar.endereco = endereco
@@ -54,7 +43,7 @@ def consulta():
 #JSON - CONSULTA
 @app.route("/lista/rodajson")
 def lista_cadastro():
-    cadastro = cadastrar.query.all()
+    cadastro = agenda_model.cadastrar.query.all()
     cadastrolist = []
     for cadas in cadastro:
         cadastroObj = {}
@@ -68,7 +57,7 @@ def lista_cadastro():
 
 @app.route("/remover_cadastro/<int:id>")
 def remover(id):
-    remcasd = cadastrar.query.filter_by(id=id).first()
+    remcasd = agenda_model.cadastrar.query.filter_by(id=id).first()
     db.session.delete(remcasd)
     db.session.commit()
     flash(f"O usuario {remcasd.nome} foi deletado")
@@ -76,14 +65,14 @@ def remover(id):
 
 @app.route("/editar_cadastro/<int:id>", methods=["GET", "POST"])
 def edita(id):
-    editar = cadastrar.query.filter_by(id=id).first()
+    editar = agenda_model.cadastrar.query.filter_by(id=id).first()
     if request.method == "POST":
         nome = request.form.get("nome")
         idade = request.form.get("idade")
         endereco = request.form.get("endereco")
         cpf = request.form.get("cpf")
         
-        salvar = cadastrar.query.filter_by(id=id).first()
+        salvar = agenda_model.cadastrar.query.filter_by(id=id).first()
         setattr(salvar, "nome", nome)
         setattr(salvar, "idade", idade)
         setattr(salvar, "endereco", endereco)
@@ -92,6 +81,3 @@ def edita(id):
         flash(f"O usuario {salvar.nome} foi alterado com sucesso")
         return redirect(url_for("consulta"))
     return render_template("editar.html", editar=editar)
-
-if __name__ == "__main__":
-    app.run(debug=True, host="localhost", port=8000)
