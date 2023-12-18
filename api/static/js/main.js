@@ -33,12 +33,7 @@ function sweet(id) {
 
     }).then((result) => {
         if (result.isConfirmed) {
-            Swal.fire({
-                title: "Deleted!",
-                text: "Your file has been deleted.",
-                icon: "success"
-            })
-            //location.reload()
+            location.reload()
             let env = {}
             env.id = id
             $.ajax({
@@ -49,8 +44,7 @@ function sweet(id) {
                 type: "POST",
                 success: function (response) {
                     console.log(response)
-                    response.reload()
-                    $(`#row-${id}`).remove();
+                    //$(`#row-${id}`).remove();
                 },
                 error: function (erro) {
                     console.log(erro)

@@ -32,7 +32,7 @@ def cadastro():
             salvar.cpf = cpf
             db.session.add(salvar)
             db.session.commit()
-            return redirect(url_for('cadastro'))
+            return redirect(url_for('index'))
     return render_template("cadastro.html")
 
 #ROTA CONSULTA
