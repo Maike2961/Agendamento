@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <title>Cadastro</title>
+    <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
     <form method="POST" href="/cadastro" class="p-5 was-validated">
-  
       {%for mens in get_flashed_messages()%}
             <h1>{{mens}}</h1>
       {%endfor%}
@@ -41,7 +41,7 @@
           </div>
         
           <div class="my-3" method="POST">
-            <button type="submit" class="btn btn-primary mb-3">Confirm</button>
+            <button type="submit" id="botao" class="btn btn-primary mb-3">Confirma</button>
           </div>
     
     </form>

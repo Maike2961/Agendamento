@@ -15,7 +15,11 @@
 </head>
 
 <body>
+
     <div class="container">
+        {%for mens in get_flashed_messages()%}
+            <h3>{{mens}}</h3>
+        {%endfor%}
         <button type="submit" id="retorno" class="btn btn-outline-info"><a class="rt" href="/">Retornar</a></button>
         <table class="table table-striped" id="example" cellspacing="0" style="width:100%">
             <thead class="table-dark">

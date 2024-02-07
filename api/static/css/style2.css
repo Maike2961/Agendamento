@@ -1,11 +1,32 @@
-body{
-    text-align: center;
+*{
+    margin: 0;
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
+body{
+    background: linear-gradient(to left, rgb(116, 116, 116), white  ) ;
+}
+
 .butao{
     border: none;
-    padding: 10px 15px;
+    border-radius: 15px;
+    padding: 10px 20px;
+    margin: 10px 5px;
 }
 .rd{
     text-decoration: none;
+}
+
+.main{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#form{
+    text-align: center;
+}
+
+h1{
+    font-size: 25pt;
 }

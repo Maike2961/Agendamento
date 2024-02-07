@@ -1,25 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/style2.css">
-    <title>Teste</title>
+    <title>Index</title>
 </head>
-
 <body>
-    <div class="main">
-        <form href="/" method="POST">
+    <section class="main">
+        {%for mens in get_flashed_messages()%}
+            <h3>{{mens}}</h3>
+            {%endfor%}
+        <form href="/" method="POST" id="form">
             <h1>Cadastro & Consulta</h1>
             <button type="submit" class="butao"><a class="rd" href="/cadastro">Cadastro</a></button>
             <button type="submit" class="butao"><a class="rd" href="/consulta">Consulta</a></button>
 
-            {%for mens in get_flashed_messages()%}
-            <h3>{{mens}}</h3>
-            {%endfor%}
+            
         </form>
-    </div>
+    </section>
 </body>
-
 </html>
